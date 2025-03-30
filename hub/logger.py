@@ -10,7 +10,11 @@ from hub.config import DEFINE_LOGS_ROOT, DEFINE_PROJECT_ROOT
 _std_level = logging.INFO
 _file_level = logging.DEBUG
 _output_file_flag = False
-_format = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <cyan>{extra[relative_path]}</cyan>:<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+_format = (
+    "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
+    "<cyan>{extra[relative_path]}</cyan>:<cyan>{name}</cyan>:"
+    "<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+)
 
 
 def get_relative_path(record):
