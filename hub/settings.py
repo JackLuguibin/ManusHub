@@ -4,6 +4,7 @@ from pathlib import Path
 
 import yaml
 
+from hub.config import DEFINE_MAIN_CONFIG_FILE
 from hub.schema.app_schema import AppSchema
 
 
@@ -22,13 +23,15 @@ class AppSetting(object):
         return cls._instance
 
     def __init__(self, filepath: Path):
-        if not self._initialized:
-            with self._lock:
-                if not self._initialized:
-                    self.filepath = filepath
-                    self._config = None
-                    self.initial_config(filepath)
-                    self._initialized = True
+        if self._initialized:
+            return
+        with self._lock:
+            if self._initialized:
+                return
+            self.filepath = filepath
+            self._config = None
+            self.initial_config(filepath)
+            self._initialized = True
 
     @staticmethod
     def _load_config( filepath):
@@ -42,3 +45,5 @@ class AppSetting(object):
         self._config = None
         raw_config = self._load_config(filepath)
         self._config = AppSchema(**raw_config)
+
+app_setting = AppSetting(DEFINE_MAIN_CONFIG_FILE)

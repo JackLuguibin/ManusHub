@@ -34,9 +34,23 @@ class Message(BaseModel):
             )
 
     @classmethod
-    def user_message(cls, content: str) -> "Message":
+    def make_user_message(cls, content: str) -> "Message":
         return cls(role=Role.USER, content=content)
 
     @classmethod
-    def system_message(cls, content: str) -> "Message":
+    def make_system_message(cls, content: str) -> "Message":
         return cls(role=Role.SYSTEM, content=content)
+
+    @classmethod
+    def make_assistant_message(cls, content: str) -> "Message":
+        return cls(role=Role.ASSISTANT, content=content)
+    @classmethod
+    def make_tool_message(cls, content: str) -> "Message":
+        return cls(role=Role.TOOL, content=content)
+
+MESSAGE_MAKERS = {
+    Role.USER: Message.make_user_message,
+    Role.SYSTEM: Message.make_system_message,
+    Role.ASSISTANT: Message.make_assistant_message,
+    Role.TOOL: Message.make_tool_message,
+}
